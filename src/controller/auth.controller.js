@@ -1,7 +1,8 @@
-require('dotenv').config
-const UserModel = require("../models/auth.model")
-const jwt = require('jsonwebtoken')
+const UserModel = require('../models/auth.model')
+require('dotenv').config();
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
+
 
 
 async function registerController(req, res) {
@@ -31,10 +32,12 @@ async function registerController(req, res) {
 
     const token = jwt.sign({
         id: user._id,
-        username: (await user).username
+        username: user.username
     }, process.env.JWT_SECRET, { expiresIn: "1d" })
    
     res.cookie("token", token)
+        console.log(token)
+
     return res.status(201).json({
         message: "User Register Succesfullly", user: {
             username: user.username,

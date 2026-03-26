@@ -1,19 +1,27 @@
 require('dotenv').config
 const express = require('express')
-const authrouter = require('express').Router()
+const followrouter = require('express').Router()
 const followController = require('../controller/follow.controller')
-
-authrouter.post('/freind/:username',authController.registerController );
-
-authrouter.delete('/freind/:usernmae',authController.loginController );
-
-authrouter.get('/freind/requests',authController.loginController );
-
-authrouter.patch('/freind/requests/:requestId',authController.loginController );
+const identifyUser = require('../middleware/auth.middleware')
 
 
+// @route http://localhost:3000/api/followfb/freind/:username
+followrouter.post('/freind/:username', identifyUser, followController.AddFreindController );
+
+
+// @route http://localhost:3000/api/followfb/freind/:username
+followrouter.delete('/freind/:username',identifyUser, followController.RemoveFreindController );
+
+
+// @route http://localhost:3000/api/followfb/freind/requests
+followrouter.get('/freind/requests',identifyUser, followController.getPendingRequest );
+
+
+
+// @route http://localhost:3000/api/followfb/freind/requests/:requestId
+followrouter.patch('/freind/requests/:requestId',identifyUser, followController.handleFollowRequest );
 
 
 
 
-module.exports = authrouter;
+module.exports = followrouter;

@@ -3,11 +3,15 @@ const mongoose = require("mongoose");
 const followSchema = new mongoose.Schema({
     follower: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'fbusers'
+        ref: 'fbusers',
+        required: true
+
     },
     following: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'fbusers'
+        ref: 'fbusers',
+        required: true
+
     },
     status: {
         type: String,
@@ -15,9 +19,9 @@ const followSchema = new mongoose.Schema({
         default: "pending"
     }
 
-}, {timestamps:true})
+}, { timestamps: true })
 
-followSchema.index({follower:1, following:1}, {unique:true})
+followSchema.index({ follower: 1, following: 1 }, { unique: true })
 
 const followModel = mongoose.model("fbfollows", followSchema)
 module.exports = followModel

@@ -22,8 +22,7 @@ yarn-error.log*
 # IDE files
 .vscode/
 .idea/
-Generating public/private ed25519 key pair.
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINZohWYJIa3ihZps8BJEkZhua7BXgivycrNgPo6BcDVj rudrachoudhary067@gmail.com
+
 # build / output
 dist/
 build/

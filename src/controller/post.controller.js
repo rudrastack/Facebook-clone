@@ -1,4 +1,5 @@
 const postModel = require('../models/post.model')
+const likeModel = require('../models/like.model')
 const ImageKit = require('imagekit');
 
 
@@ -68,8 +69,66 @@ async function getpostDetailsController(req, res) {
     })
 }
 
+async function postlikeController(req, res) {
+    const userId = req.user.id
+    const postId = req.params.postId
+
+    const post = await postModel.findById(postId)
+
+    if (!post) {
+        return res.status(404).json({
+            message: "Post not found"
+        })
+    }
+    
+    const alreadyLiked = await likeModel.findOne({
+        user: userId,
+        post: postId
+    })
+
+    if (alreadyLiked) {
+        return res.status(400).json({
+            message: "You already liked this post"
+        })
+    }
+
+    const like = await likeModel.create({
+        user: userId,
+        post: postId
+    })
+
+    return res.status(200).json({
+        message: "Post liked successfully",
+        like
+    })
+}
+
+async function postunlikeController(req, res) {
+    const userId = req.user.id
+    const postId = req.params.postId
+
+    const isUserliked = await likeModel.findOne({
+        user: userId,
+        post: postId
+    })
+
+    if (!isUserliked) {
+        return res.status(400).json({
+            message: "You have not liked this post"
+        })
+    }
+
+    await likeModel.deleteOne({ _id: isUserliked._id })
+
+    return res.status(200).json({
+        message: "Post unliked successfully"
+    })
+}
+
 module.exports = {
     createPostController,
     getpostController,
-    getpostDetailsController
+    getpostDetailsController,
+    postlikeController,
+    postunlikeController
 }

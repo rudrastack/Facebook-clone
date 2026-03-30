@@ -4,8 +4,6 @@ const followModel = require('../models/follow.model')
 
 
 async function AddFreindController(req, res) {
-    console.log("logged user:", req.user.username)
-    console.log("target user:", req.params.username)
 
     const followerUser = await UserModel.findById(req.user.id)
     const followingUser = await UserModel.findOne({

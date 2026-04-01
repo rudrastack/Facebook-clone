@@ -36,7 +36,6 @@ async function registerController(req, res) {
     }, process.env.JWT_SECRET, { expiresIn: "1d" })
    
     res.cookie("token", token)
-        console.log(token)
 
     return res.status(201).json({
         message: "User Register Succesfullly", user: {
@@ -95,4 +94,20 @@ async function loginController(req, res) {
     })
 }
 
-module.exports ={registerController, loginController}
+async function getMeController(req, res) {
+    
+    const userId = req.user.id
+
+    const user = await UserModel.findById(userId)
+    res.status(200).json({
+     user: {
+            username: user.username,
+            email: user.email,
+            isPrivate: user.isPrivate,
+            bio: user.bio,
+            profilePicture: user.profilePicture
+        }
+    })
+}
+
+module.exports ={registerController, loginController, getMeController}

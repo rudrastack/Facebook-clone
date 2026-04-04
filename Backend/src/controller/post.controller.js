@@ -125,10 +125,21 @@ async function postunlikeController(req, res) {
     })
 }
 
+async function getFeedController(req, res) {
+    const posts = postModel.find().populate("user").select("-user.password")
+
+    res.status(200).json({
+        message: "Feed fetched successfully",
+        posts
+    })
+   
+    }
+
 module.exports = {
     createPostController,
     getpostController,
     getpostDetailsController,
     postlikeController,
-    postunlikeController
+    postunlikeController,
+    getFeedController
 }

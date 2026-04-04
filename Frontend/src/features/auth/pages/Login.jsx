@@ -1,49 +1,55 @@
-import React from 'react'
-import '../style/form.scss'
+import React, { useState } from 'react'
+import "../style/form.scss"
 import { Link } from 'react-router'
-import { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router'
 
-
-
 const Login = () => {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
 
-    const { handlelogin, loading } = useAuth()
+    const { loading, handleLogin } = useAuth()
 
-    const Navigate = useNavigate()
+    const [ username, setUsername ] = useState("")
+    const [ password, setPassword ] = useState("")
+
+    const navigate = useNavigate()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        await handleLogin(username, password)
+
+        navigate('/')
+
+    }
 
     if (loading) {
-        return <h1>Loading...</h1>
+        return (<main>
+            <h1>Loading.....</h1>
+        </main>)
     }
-    
-    function handleSubmit(e) {
-        e.preventDefault()
-        handlelogin(username, password)
-        .then(res => {
-            console.log(res)
-            Navigate("/")
-        })
-    }
+
+
     return (
+
         <main>
-            <div className='form-container'>
+            <div className="form-container">
                 <h1>Login</h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} >
                     <input
                         onInput={(e) => { setUsername(e.target.value) }}
-                        type="text" name='Username'
-                        placeholder='Enter Username' />
+                        type="text"
+                        name='username'
+                        id='username'
+                        placeholder='Enter username' />
                     <input
                         onInput={(e) => { setPassword(e.target.value) }}
-                        type="text" name='Password'
-                        placeholder='Enter Password' />
-                    <button type="submit">Submit</button>
+                        type="password"
+                        name='password'
+                        id='password'
+                        placeholder='Enter password' />
+                    <button className='button primary-button' >Login</button>
                 </form>
-                <p>Don't have an account? <Link className='toggleAuthform' to="/register"> Register</Link></p>
-
+                <p>Don't have an account ? <Link to={"/register"} >Create One.</Link></p>
             </div>
         </main>
     )

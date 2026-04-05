@@ -6,8 +6,10 @@
     flex-direction: column;
 
     .feed {
-        max-width: 300px;
+        max-width: 400px;
         width: 100%;
+        background-color: white;
+        color: rgb(10, 10, 10);
 
         .posts{
             width: 100%;
@@ -21,7 +23,7 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            background-color: #312626;
+            background-color: white;
             padding-inline: 0.5rem;
             padding-block: 0.5rem;
 
@@ -55,13 +57,13 @@
                 }
 
                 .like{
-                    color: red;
+                    color: rgb(2, 99, 189);
                 }
                 
                 svg{
                     width: 1rem;
                     aspect-ratio: 1/1;
-                    color: white;
+                    color: rgb(0, 0, 0);
                 }
                 button{
                     background-color: transparent;

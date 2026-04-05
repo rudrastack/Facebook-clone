@@ -9,7 +9,7 @@ const Post = ({ user, post,loading, handleLike, handleUnLike }) => {
         <div className="post">
             <div className="user">
                 <div className="img-wrapper">
-                    <img src={user.profileImage} alt="" />
+                    <img src={user.profilePicture} alt="" />
                 </div>
                 <p>{user.username}</p>
             </div>

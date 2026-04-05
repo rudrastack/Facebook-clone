@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   profilePicture: {
     type: String,
-    default: "https://ik.ixcmagekit.io/ot0r1u60d/f782c8360e890a8d488eeda004b26bde.jpg?updatedAt=1773224135450"
+    default: "https://ik.imagekit.io/6v2va7nt5/Facebook-collection/f782c8360e890a8d488eeda004b26bde.jpg"
   },
   bio: String,
 

@@ -10,7 +10,7 @@
         required:[true, "imgUrl is required to create post"]
       },
       user:{
-        ref:'users',
+        ref:'fbusers',
         type:mongoose.Schema.Types.ObjectId,
         required:[true, "UserId is required for creating post"]
       }

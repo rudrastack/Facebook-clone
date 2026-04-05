@@ -126,10 +126,25 @@ async function postunlikeController(req, res) {
 }
 
 async function getFeedController(req, res) {
-    const posts = postModel.find().populate("user").select("-user.password")
+
+    const userId = req.user.id
+
+    const posts = await Promise.all((await postModel.find({}).populate("user").lean())
+        .map(async (post) => {
+            const isLiked = await likeModel.findOne({
+                user: userId,
+                post: post._id
+            })
+
+            post.isLiked = Boolean(isLiked)
+
+            return post
+        }))
+
+
 
     res.status(200).json({
-        message: "Feed fetched successfully",
+        message: "posts fetched successfully.",
         posts
     })
    

@@ -37,8 +37,12 @@ async function registerController(req, res) {
    
     res.cookie("token", token, {
   httpOnly: true,
+  //production 
   secure: true,        
-  sameSite: "None"     
+  sameSite: "None"  
+  //local
+//   secure: false,
+// sameSite: "Lax"   
 })
 
     return res.status(201).json({
@@ -85,8 +89,12 @@ async function loginController(req, res) {
 
  res.cookie("token", token, {
   httpOnly: true,
-  secure: true,        // ✅ production me true
-  sameSite: "None"     // ✅ MOST IMPORTANT
+    //production 
+  secure: true,        
+  sameSite: "None"  
+  //local
+//   secure: false,
+// sameSite: "Lax"   
 })
 
     return res.status(200).json({

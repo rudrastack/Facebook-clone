@@ -20,7 +20,7 @@ const Feed = () => {
 
   useEffect(() => {
     handleGetFeed()
-  }, [])
+  }, [user])
 
   if (loading) {
     return <h1>Loading...</h1>

@@ -2,14 +2,14 @@ import axios from "axios";
 
 
 const api = axios.create({
-    baseURL: "http://localhost:3000/api/authfb",
+    baseURL: "https://facebook-clone-3vpt.onrender.com",
     withCredentials: true,
 })
 
 
 export async function login(username, password) {
     
-    const response = await api.post('/login', {
+    const response = await api.post('/api/authfb/login', {
         username, password
     })
 
@@ -20,7 +20,7 @@ export async function login(username, password) {
 }
 
 export async function register(username, email, password, isPrivate) {
-    const response = await api.post('/register', {
+    const response = await api.post('/api/authfb/register', {
         username, email, password, isPrivate
     })
 
@@ -28,7 +28,7 @@ export async function register(username, email, password, isPrivate) {
 }
 
 export async function getMe() {
-    const response = await api.get('/get-me')
+    const response = await api.get('/api/authfb/get-me')
 
     return response.data
 }

@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const api = axios.create({
-    baseURL: "http://localhost:3000/api/authfb",
+    baseURL: "https://facebook-clone-3vpt.onrender.com/api/authfb",
     withCredentials: true,
 })
 

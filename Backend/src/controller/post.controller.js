@@ -126,30 +126,7 @@ async function postunlikeController(req, res) {
     })
 }
 
-// async function getFeedController(req, res) {
 
-//     const userId = req.user.id
-
-//     const posts = await Promise.all((await postModel.find({}).populate("user").lean())
-//         .map(async (post) => {
-//             const isLiked = await likeModel.findOne({
-//                 user: userId,
-//                 post: post._id
-//             })
-
-//             post.isLiked = Boolean(isLiked)
-
-//             return post
-//         }))
-
-
-
-//     res.status(200).json({
-//         message: "posts fetched successfully.",
-//         posts
-//     })
-   
-//     }
 
 
 async function getFeedController(req, res) {
@@ -160,7 +137,6 @@ async function getFeedController(req, res) {
         (await postModel.find({}).sort({ _id: -1 }).populate("user").lean())
         .map(async (post) => {
 
-            // ✅ LIKE LOGIC (already yours)
             const isLiked = await likeModel.findOne({
                 user: userId,
                 post: post._id
@@ -168,15 +144,14 @@ async function getFeedController(req, res) {
 
             post.isLiked = Boolean(isLiked)
 
-            // 🔥 FOLLOW LOGIC START
 
-            // 1. Check if YOU sent request / follow
+            //  Check if YOU sent request / follow
             const follow = await followModel.findOne({
                 follower: userId,
                 following: post.user._id
             })
 
-            // 2. Check if THEY sent you request
+            // Check if THEY sent you request
             const incoming = await followModel.findOne({
                 follower: post.user._id,
                 following: userId,
@@ -191,7 +166,7 @@ async function getFeedController(req, res) {
                 requestId = follow._id
             }
 
-            // 🔥 overwrite if incoming request exists
+            // overwrite if incoming request exists
             if (incoming) {
                 followStatus = "incoming"
                 requestId = incoming._id
@@ -200,7 +175,6 @@ async function getFeedController(req, res) {
             post.followStatus = followStatus
             post.requestId = requestId
 
-            // 🔥 FOLLOW LOGIC END
 
             return post
         })

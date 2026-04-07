@@ -32,7 +32,7 @@ const fetchData = async () => {
   <span className="close-btn" onClick={onClose}>✖</span>
 
 
-        <h2>{user.username}</h2>
+        <h2>@{user.username}</h2>
 
         <p>Followers: {stats.followers}</p>
         <p>Following: {stats.following}</p>

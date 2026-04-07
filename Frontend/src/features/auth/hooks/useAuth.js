@@ -17,7 +17,7 @@ const handleLogin = async (username, password) => {
     try {
         const data = await login(username, password)
 
-        setUser(data.user) // ✅ IMPORTANT
+        setUser(data.user) 
 
     } catch (err) {
         console.log(err)

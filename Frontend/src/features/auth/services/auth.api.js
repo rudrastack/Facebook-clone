@@ -13,7 +13,7 @@ export async function login(username, password) {
         username, password
     })
 
-    // ✅ FIX
+  
     localStorage.setItem("user", JSON.stringify(response.data.user))
 
     return response.data

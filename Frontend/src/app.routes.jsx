@@ -18,14 +18,13 @@ export const router = createBrowserRouter([
         element: <Register />
     },
 
-    // 🔥 DEFAULT REDIRECT
+  
     {
        path: "/",
        element: <Navigate to="/feed" />
   
     },
 
-    // 🔒 PROTECTED ROUTES
     {
         path: '/feed',
         element: (

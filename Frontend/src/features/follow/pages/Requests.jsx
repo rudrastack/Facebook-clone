@@ -17,7 +17,6 @@ const Requests = () => {
   const handleAction = async (id, status) => {
     await handleRequest(id, status)
 
-    // UI update
     setRequests(prev => prev.filter(r => r._id !== id))
   }
 

@@ -61,6 +61,42 @@ async function AddFreindController(req, res) {
     })
 }
 
+// async function RemoveFreindController(req, res) {
+//     const followerUser = await UserModel.findById(req.user.id)
+//     const followingUser = await UserModel.findOne({ username: req.params.username })
+
+//     const follow = await followModel.findOne({
+//         follower: followerUser._id,
+//         following: followingUser._id,
+//         status: "accepted"
+//     })
+//     if (!follow) {
+//         return res.status(400).json({
+//             message: `you are not following ${req.params.username}`
+//         })
+//     }
+//     await followModel.deleteOne({ _id: follow._id })
+//     if (status === "rejected") {
+//     await followModel.deleteOne({ _id: requestId })
+//     return res.json({ message: "Request rejected & removed" })
+// }
+
+//     return res.status(200).json({
+//         message: "Unfollowed successfully",
+
+//     })
+// }
+
+// async function getPendingRequest(req, res) {
+//     const user = await UserModel.findOne({ username: req.user.username })
+
+//     const requests = await followModel.find({
+//         follower: user._id,
+//         status: "pending",
+//     }).populate("follower", "username")
+
+//     res.json({ requests })
+// }
 async function RemoveFreindController(req, res) {
     const followerUser = await UserModel.findById(req.user.id)
     const followingUser = await UserModel.findOne({ username: req.params.username })
@@ -70,16 +106,17 @@ async function RemoveFreindController(req, res) {
         following: followingUser._id,
         status: "accepted"
     })
+
     if (!follow) {
         return res.status(400).json({
             message: `you are not following ${req.params.username}`
         })
     }
+
     await followModel.deleteOne({ _id: follow._id })
 
     return res.status(200).json({
         message: "Unfollowed successfully",
-
     })
 }
 
@@ -87,9 +124,9 @@ async function getPendingRequest(req, res) {
     const user = await UserModel.findOne({ username: req.user.username })
 
     const requests = await followModel.find({
-        follower: user._id,
+        following: user._id, // ✅ FIX
         status: "pending",
-    }).populate("follower", "username")
+    }).populate("follower", "username profilePicture")
 
     res.json({ requests })
 }
@@ -120,11 +157,30 @@ async function handleFollowRequest(req, res) {
     return res.json({ message: `Request ${status}` })
 }
 
+async function getFollowStats(req, res) {
 
+    const userId = req.user.id
+
+    const followers = await followModel.countDocuments({
+        following: userId,
+        status: "accepted"
+    })
+
+    const following = await followModel.countDocuments({
+        follower: userId,
+        status: "accepted"
+    })
+
+    res.json({
+        followers,
+        following
+    })
+}
 
 module.exports = {
     AddFreindController,
     RemoveFreindController,
     getPendingRequest,
-    handleFollowRequest
+    handleFollowRequest,
+    getFollowStats
 }

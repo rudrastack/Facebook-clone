@@ -22,6 +22,9 @@ followrouter.get('/freind/requests',identifyUser, followController.getPendingReq
 followrouter.patch('/freind/requests/:requestId',identifyUser, followController.handleFollowRequest );
 
 
+// @route http://localhost:3000/api/followfb/freind/stats
+followrouter.get('/freind/stats', identifyUser, followController.getFollowStats)
+
 
 
 module.exports = followrouter;

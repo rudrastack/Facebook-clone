@@ -13,14 +13,13 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+ const handleSubmit = async (e) => {
+    e.preventDefault()
 
-        await handleLogin(username, password)
+    await handleLogin(username, password)
 
-        navigate('/')
-
-    }
+    navigate('/feed', { replace: true })
+}
 
     if (loading) {
         return (<main>

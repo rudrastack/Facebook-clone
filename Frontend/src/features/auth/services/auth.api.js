@@ -13,13 +13,15 @@ export async function login(username, password) {
         username, password
     })
 
+    // ✅ FIX
+    localStorage.setItem("user", JSON.stringify(response.data.user))
+
     return response.data
-    
 }
 
-export async function register(username, email, password) {
+export async function register(username, email, password, isPrivate) {
     const response = await api.post('/register', {
-        username, email, password
+        username, email, password, isPrivate
     })
 
     return response.data

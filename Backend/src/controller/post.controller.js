@@ -1,5 +1,6 @@
 const postModel = require('../models/post.model')
 const likeModel = require('../models/like.model')
+const followModel = require('../models/follow.model')
 const ImageKit = require('imagekit');
 
 
@@ -125,12 +126,41 @@ async function postunlikeController(req, res) {
     })
 }
 
+// async function getFeedController(req, res) {
+
+//     const userId = req.user.id
+
+//     const posts = await Promise.all((await postModel.find({}).populate("user").lean())
+//         .map(async (post) => {
+//             const isLiked = await likeModel.findOne({
+//                 user: userId,
+//                 post: post._id
+//             })
+
+//             post.isLiked = Boolean(isLiked)
+
+//             return post
+//         }))
+
+
+
+//     res.status(200).json({
+//         message: "posts fetched successfully.",
+//         posts
+//     })
+   
+//     }
+
+
 async function getFeedController(req, res) {
 
     const userId = req.user.id
 
-    const posts = await Promise.all((await postModel.find({}).populate("user").lean())
+    const posts = await Promise.all(
+        (await postModel.find({}).sort({ _id: -1 }).populate("user").lean())
         .map(async (post) => {
+
+            // ✅ LIKE LOGIC (already yours)
             const isLiked = await likeModel.findOne({
                 user: userId,
                 post: post._id
@@ -138,17 +168,49 @@ async function getFeedController(req, res) {
 
             post.isLiked = Boolean(isLiked)
 
+            // 🔥 FOLLOW LOGIC START
+
+            // 1. Check if YOU sent request / follow
+            const follow = await followModel.findOne({
+                follower: userId,
+                following: post.user._id
+            })
+
+            // 2. Check if THEY sent you request
+            const incoming = await followModel.findOne({
+                follower: post.user._id,
+                following: userId,
+                status: "pending"
+            })
+
+            let followStatus = "none"
+            let requestId = null
+
+            if (follow) {
+                followStatus = follow.status   // pending / accepted
+                requestId = follow._id
+            }
+
+            // 🔥 overwrite if incoming request exists
+            if (incoming) {
+                followStatus = "incoming"
+                requestId = incoming._id
+            }
+
+            post.followStatus = followStatus
+            post.requestId = requestId
+
+            // 🔥 FOLLOW LOGIC END
+
             return post
-        }))
-
-
+        })
+    )
 
     res.status(200).json({
         message: "posts fetched successfully.",
         posts
     })
-   
-    }
+}
 
 module.exports = {
     createPostController,

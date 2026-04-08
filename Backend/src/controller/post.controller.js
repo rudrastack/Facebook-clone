@@ -81,7 +81,7 @@ async function postlikeController(req, res) {
             message: "Post not found"
         })
     }
-    
+
     const alreadyLiked = await likeModel.findOne({
         user: userId,
         post: postId
@@ -135,49 +135,49 @@ async function getFeedController(req, res) {
 
     const posts = await Promise.all(
         (await postModel.find({}).sort({ _id: -1 }).populate("user").lean())
-        .map(async (post) => {
+            .map(async (post) => {
 
-            const isLiked = await likeModel.findOne({
-                user: userId,
-                post: post._id
+                const isLiked = await likeModel.findOne({
+                    user: userId,
+                    post: post._id
+                })
+
+                post.isLiked = Boolean(isLiked)
+
+
+                //  Check if YOU sent request / follow
+                const follow = await followModel.findOne({
+                    follower: userId,
+                    following: post.user._id
+                })
+
+                // Check if THEY sent you request
+                const incoming = await followModel.findOne({
+                    follower: post.user._id,
+                    following: userId,
+                    status: "pending"
+                })
+
+                let followStatus = "none"
+                let requestId = null
+
+                if (follow) {
+                    followStatus = follow.status   // pending / accepted
+                    requestId = follow._id
+                }
+
+                // overwrite if incoming request exists
+                if (incoming) {
+                    followStatus = "incoming"
+                    requestId = incoming._id
+                }
+
+                post.followStatus = followStatus
+                post.requestId = requestId
+
+
+                return post
             })
-
-            post.isLiked = Boolean(isLiked)
-
-
-            //  Check if YOU sent request / follow
-            const follow = await followModel.findOne({
-                follower: userId,
-                following: post.user._id
-            })
-
-            // Check if THEY sent you request
-            const incoming = await followModel.findOne({
-                follower: post.user._id,
-                following: userId,
-                status: "pending"
-            })
-
-            let followStatus = "none"
-            let requestId = null
-
-            if (follow) {
-                followStatus = follow.status   // pending / accepted
-                requestId = follow._id
-            }
-
-            // overwrite if incoming request exists
-            if (incoming) {
-                followStatus = "incoming"
-                requestId = incoming._id
-            }
-
-            post.followStatus = followStatus
-            post.requestId = requestId
-
-
-            return post
-        })
     )
 
     res.status(200).json({

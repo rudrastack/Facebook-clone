@@ -8,18 +8,18 @@ const Login = () => {
 
     const { loading, handleLogin } = useAuth()
 
-    const [ username, setUsername ] = useState("")
-    const [ password, setPassword ] = useState("")
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
 
     const navigate = useNavigate()
 
- const handleSubmit = async (e) => {
-    e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
-    await handleLogin(username, password)
+        await handleLogin(username, password)
 
-    navigate('/feed', { replace: true })
-}
+        navigate('/feed', { replace: true })
+    }
 
     if (loading) {
         return (<main>
@@ -48,7 +48,7 @@ const Login = () => {
                         placeholder='Enter password' />
                     <button className='button primary-button' >Login</button>
                 </form>
-                
+
                 <p>Don't have an account ? <Link to={"/register"} >Create One.</Link></p>
             </div>
         </main>

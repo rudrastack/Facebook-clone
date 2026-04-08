@@ -16,24 +16,24 @@ async function AddFreindController(req, res) {
     })
 
 
-   if (isAlreadyexist) {
+    if (isAlreadyexist) {
 
-    if (isAlreadyexist.status === "pending") {
-        return res.status(400).json({
-            message: "Request Already Sent"
-        })
-    }
+        if (isAlreadyexist.status === "pending") {
+            return res.status(400).json({
+                message: "Request Already Sent"
+            })
+        }
 
-    if (isAlreadyexist.status === "accepted") {
-        return res.status(400).json({
-            message: "Already Following"
-        })
-    }
+        if (isAlreadyexist.status === "accepted") {
+            return res.status(400).json({
+                message: "Already Following"
+            })
+        }
 
-    if (isAlreadyexist.status === "rejected") {
-        await followModel.deleteOne({ _id: isAlreadyexist._id })
+        if (isAlreadyexist.status === "rejected") {
+            await followModel.deleteOne({ _id: isAlreadyexist._id })
+        }
     }
-}
 
     if (followerUser._id.toString() === followingUser._id.toString()) {
         return res.status(400).json({
@@ -88,7 +88,7 @@ async function getPendingRequest(req, res) {
     const user = await UserModel.findOne({ username: req.user.username })
 
     const requests = await followModel.find({
-        following: user._id, 
+        following: user._id,
         status: "pending",
     }).populate("follower", "username profilePicture")
 

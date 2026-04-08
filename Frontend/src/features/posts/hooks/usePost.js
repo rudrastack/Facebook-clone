@@ -18,7 +18,7 @@ export const usePost = () => {
   const handleCreatePost = async (imageFile, caption) => {
     const res = await createPost(imageFile, caption)
 
-  
+
     setFeed(prev => [res.post, ...prev])
   }
 
@@ -49,7 +49,7 @@ export const usePost = () => {
     setFeed,
     loading,
     handleGetFeed,
-    handleCreatePost, 
+    handleCreatePost,
     handleLike,
     handleUnLike
   }

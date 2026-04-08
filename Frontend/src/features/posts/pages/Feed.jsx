@@ -3,11 +3,11 @@ import "../style/feed.scss"
 import Post from '../components/post'
 import { usePost } from '../hooks/usePost'
 import Nav from '../../shared/components/Nav'
-import { useAuth } from '../../auth/hooks/useAuth' 
+import { useAuth } from '../../auth/hooks/useAuth'
 
 const Feed = () => {
 
-  const { user } = useAuth() 
+  const { user } = useAuth()
 
   const {
     feed,
@@ -30,8 +30,8 @@ const Feed = () => {
     <main className='feed-page'>
       <div className="feed">
 
-     
-<Nav user={user} setPosts={setFeed} />
+
+        <Nav user={user} setPosts={setFeed} />
 
         <div className="posts">
           {feed.map(post => (

@@ -1,35 +1,35 @@
-    import axios from "axios";
+import axios from "axios";
 
 
-    const api = axios.create({
-        baseURL: "https://facebook-clone-3vpt.onrender.com/api/authfb",
-        // baseURL: "http://localhost:3000/api/authfb",
-        withCredentials: true,
+const api = axios.create({
+    baseURL: "https://facebook-clone-3vpt.onrender.com/api/authfb",
+    // baseURL: "http://localhost:3000/api/authfb",
+    withCredentials: true,
+})
+
+
+export async function login(username, password) {
+
+    const response = await api.post('/login', {
+        username, password
     })
 
 
-    export async function login(username, password) {
-        
-        const response = await api.post('/login', {
-            username, password
-        })
+    localStorage.setItem("user", JSON.stringify(response.data.user))
 
-    
-        localStorage.setItem("user", JSON.stringify(response.data.user))
+    return response.data
+}
 
-        return response.data
-    }
+export async function register(username, email, password, isPrivate) {
+    const response = await api.post('/register', {
+        username, email, password, isPrivate
+    })
 
-    export async function register(username, email, password, isPrivate) {
-        const response = await api.post('/register', {
-            username, email, password, isPrivate
-        })
+    return response.data
+}
 
-        return response.data
-    }
+export async function getMe() {
+    const response = await api.get('/get-me')
 
-    export async function getMe() {
-        const response = await api.get('/get-me')
-
-        return response.data
-    }
+    return response.data
+}

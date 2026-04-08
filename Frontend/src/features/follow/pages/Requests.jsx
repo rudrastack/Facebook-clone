@@ -26,7 +26,7 @@ const Requests = () => {
 
       {requests.map(req => (
         <div key={req._id} style={{ margin: "10px" }}>
-          
+
           <p>{req.follower.username}</p>
 
           <button onClick={() => handleAction(req._id, "accepted")}>

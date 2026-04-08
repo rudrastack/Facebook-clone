@@ -8,7 +8,7 @@ const Register = () => {
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [isPrivate, setIsPrivate] = useState(false) 
+    const [isPrivate, setIsPrivate] = useState(false)
 
     const navigate = useNavigate()
 
@@ -17,7 +17,7 @@ const Register = () => {
 
         await handleRegister(username, email, password, isPrivate) /
 
-        navigate('/')
+            navigate('/')
     }
 
     if (loading) {
@@ -49,7 +49,7 @@ const Register = () => {
                         placeholder='Enter password'
                     />
 
-                    
+
                     <label style={{ margin: "10px 0", display: "block" }}>
                         <input
                             type="checkbox"

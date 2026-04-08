@@ -11,25 +11,25 @@ const ProfilePopup = ({ user, onClose }) => {
     fetchData()
   }, [])
 
-const fetchData = async () => {
-  try {
-    const s = await getStats()
-    const r = await getRequests()
+  const fetchData = async () => {
+    try {
+      const s = await getStats()
+      const r = await getRequests()
 
-    setStats(s)
-    setRequests(r?.requests || [])
-  } catch (err) {
-    console.log(err)
+      setStats(s)
+      setRequests(r?.requests || [])
+    } catch (err) {
+      console.log(err)
+    }
   }
-}
 
   return (
     <div className="overlay" onClick={onClose}>
 
-     <div className="popup" onClick={(e) => e.stopPropagation()}>
+      <div className="popup" onClick={(e) => e.stopPropagation()}>
 
-  {/* ❌ CLOSE BUTTON */}
-  <span className="close-btn" onClick={onClose}>✖</span>
+        {/* ❌ CLOSE BUTTON */}
+        <span className="close-btn" onClick={onClose}>✖</span>
 
 
         <h2>@{user.username}</h2>

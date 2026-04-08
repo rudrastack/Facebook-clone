@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const api = axios.create({  
+export const api = axios.create({
     baseURL: "https://facebook-clone-3vpt.onrender.com",
     // baseURL: "http://localhost:3000",
     withCredentials: true

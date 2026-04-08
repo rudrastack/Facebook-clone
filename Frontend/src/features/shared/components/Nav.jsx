@@ -11,7 +11,7 @@ const Nav = ({ user, setPosts }) => {
 
   const [open, setOpen] = useState(false)
   const [requests, setRequests] = useState([])
-  const [stats, setStats] = useState({ followers: 0, following: 0 }) 
+  const [stats, setStats] = useState({ followers: 0, following: 0 })
   const [showProfile, setShowProfile] = useState(false)
 
   const { accept, reject } = useFollow(setPosts)
@@ -21,7 +21,7 @@ const Nav = ({ user, setPosts }) => {
   useEffect(() => {
     if (open) {
       fetchRequests()
-      fetchStats() 
+      fetchStats()
     }
   }, [open])
 
@@ -38,82 +38,82 @@ const Nav = ({ user, setPosts }) => {
   return (
     <div className="nav">
 
-      
+
       <div className="nav-top">
 
         <p className="logo">facebook</p>
 
-     
+
         <div className="nav-right">
 
           {user && (
-<div
-  className="user-info"
-  onClick={() => setShowProfile(true)}
->
-  {showProfile && (
-  <ProfilePopup 
-    user={user} 
-    onClose={() => setShowProfile(false)} 
-  />
-)}
+            <div
+              className="user-info"
+              onClick={() => setShowProfile(true)}
+            >
+              {showProfile && (
+                <ProfilePopup
+                  user={user}
+                  onClose={() => setShowProfile(false)}
+                />
+              )}
 
-    <img src={user.profilePicture} alt="" />
- 
+              <img src={user.profilePicture} alt="" />
 
-    {open && (
-  <div 
-    className="dropdown"
-    onClick={(e) => e.stopPropagation()}
-  >
 
-    <h4>{user?.username}</h4>
+              {open && (
+                <div
+                  className="dropdown"
+                  onClick={(e) => e.stopPropagation()}
+                >
 
-    <p>Followers: {stats.followers}</p>
-    <p>Following: {stats.following}</p>
+                  <h4>{user?.username}</h4>
 
-    <hr />
+                  <p>Followers: {stats.followers}</p>
+                  <p>Following: {stats.following}</p>
 
-    <h5>Requests</h5>
+                  <hr />
 
-    {requests?.length === 0 && <p>No requests</p>}
+                  <h5>Requests</h5>
 
-    {requests?.map(req => (
-      <div key={req._id} className="req-item">
+                  {requests?.length === 0 && <p>No requests</p>}
 
-        <span>{req.follower.username}</span>
+                  {requests?.map(req => (
+                    <div key={req._id} className="req-item">
 
-        <button onClick={(e) => {
-          e.stopPropagation()
-          accept(req._id, req.follower.username)
-          setRequests(prev => prev.filter(r => r._id !== req._id))
-        }}>
-          ✅
-        </button>
+                      <span>{req.follower.username}</span>
 
-        <button onClick={(e) => {
-          e.stopPropagation()
-          reject(req._id, req.follower.username)
-          setRequests(prev => prev.filter(r => r._id !== req._id))
-        }}>
-          ❌
-        </button>
+                      <button onClick={(e) => {
+                        e.stopPropagation()
+                        accept(req._id, req.follower.username)
+                        setRequests(prev => prev.filter(r => r._id !== req._id))
+                      }}>
+                        ✅
+                      </button>
 
-      </div>
-    ))}
+                      <button onClick={(e) => {
+                        e.stopPropagation()
+                        reject(req._id, req.follower.username)
+                        setRequests(prev => prev.filter(r => r._id !== req._id))
+                      }}>
+                        ❌
+                      </button>
 
-  </div>
-)}
+                    </div>
+                  ))}
 
-  </div>
-)}
-        
+                </div>
+              )}
+
+            </div>
+          )}
+
 
         </div>
 
       </div>
 
-     
+
       <div className="create-post">
 
         <div className="input-box" onClick={goToCreatePost}>

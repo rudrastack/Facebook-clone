@@ -34,16 +34,16 @@ async function registerController(req, res) {
         id: user._id,
         username: user.username
     }, process.env.JWT_SECRET, { expiresIn: "1d" })
-   
+
     res.cookie("token", token, {
-  httpOnly: true,
-  //production 
-  secure: true,        
-  sameSite: "None"  
-  //local
-//   secure: false,
-// sameSite: "Lax"   
-})
+        httpOnly: true,
+        //production 
+        secure: true,
+        sameSite: "None"
+        //local
+        //   secure: false,
+        // sameSite: "Lax"   
+    })
 
     return res.status(201).json({
         message: "User Register Succesfullly", user: {
@@ -53,7 +53,7 @@ async function registerController(req, res) {
             bio: user.bio,
             profilePicture: user.profilePicture
         }
-    })  
+    })
 }
 
 async function loginController(req, res) {
@@ -87,15 +87,15 @@ async function loginController(req, res) {
         username: user.username
     }, process.env.JWT_SECRET, { expiresIn: "1d" })
 
- res.cookie("token", token, {
-  httpOnly: true,
-    //production 
-  secure: true,        
-  sameSite: "None"  
-  //local
-//   secure: false,
-// sameSite: "Lax"   
-})
+    res.cookie("token", token, {
+        httpOnly: true,
+        //production 
+        secure: true,
+        sameSite: "None"
+        //local
+        //   secure: false,
+        // sameSite: "Lax"   
+    })
 
     return res.status(200).json({
         message: "User Login Succesfully", user: {
@@ -111,12 +111,12 @@ async function loginController(req, res) {
 }
 
 async function getMeController(req, res) {
-    
+
     const userId = req.user.id
 
     const user = await UserModel.findById(userId)
     res.status(200).json({
-     user: {
+        user: {
             username: user.username,
             email: user.email,
             isPrivate: user.isPrivate,
@@ -126,4 +126,4 @@ async function getMeController(req, res) {
     })
 }
 
-module.exports ={registerController, loginController, getMeController}
+module.exports = { registerController, loginController, getMeController }

@@ -18,11 +18,11 @@ export const router = createBrowserRouter([
         element: <Register />
     },
 
-  
+
     {
-       path: "/",
-       element: <Navigate to="/feed" />
-  
+        path: "/",
+        element: <Navigate to="/feed" />
+
     },
 
     {
